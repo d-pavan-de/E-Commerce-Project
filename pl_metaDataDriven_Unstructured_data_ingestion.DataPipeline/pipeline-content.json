@@ -97,7 +97,7 @@
                       "location": {
                         "type": "LakehouseLocation",
                         "folderPath": {
-                          "value": "@item().sink_folder",
+                          "value": "@concat('bronze\\',item().sink_folder)",
                           "type": "Expression"
                         },
                         "fileName": {
@@ -112,11 +112,11 @@
                     },
                     "schema": [],
                     "linkedService": {
-                      "name": "Transactions",
+                      "name": "lh_e_commerce",
                       "properties": {
                         "type": "Lakehouse",
                         "typeProperties": {
-                          "artifactId": "3b5d7ba7-2e01-9e27-47a7-e7c56dc2d01d",
+                          "artifactId": "f52a83b6-85a5-93a5-4efa-165b11e01b60",
                           "workspaceId": "00000000-0000-0000-0000-000000000000",
                           "rootFolder": "Files"
                         },
@@ -144,62 +144,6 @@
                 "secureOutput": false
               },
               "name": "Get unstructured Data from Github",
-              "dependsOn": [
-                {
-                  "activity": "Delete unstructured old files",
-                  "dependencyConditions": [
-                    "Succeeded"
-                  ]
-                }
-              ]
-            },
-            {
-              "type": "Delete",
-              "typeProperties": {
-                "enableLogging": false,
-                "datasetSettings": {
-                  "type": "Binary",
-                  "typeProperties": {
-                    "location": {
-                      "type": "LakehouseLocation",
-                      "folderPath": {
-                        "value": "@item().sink_folder",
-                        "type": "Expression"
-                      },
-                      "fileName": {
-                        "value": "@item().sink_file",
-                        "type": "Expression"
-                      }
-                    }
-                  },
-                  "linkedService": {
-                    "name": "Transactions",
-                    "properties": {
-                      "type": "Lakehouse",
-                      "typeProperties": {
-                        "artifactId": "3b5d7ba7-2e01-9e27-47a7-e7c56dc2d01d",
-                        "workspaceId": "00000000-0000-0000-0000-000000000000",
-                        "rootFolder": "Files"
-                      },
-                      "annotations": []
-                    }
-                  },
-                  "annotations": []
-                },
-                "storeSettings": {
-                  "type": "AzureBlobStorageReadSettings",
-                  "recursive": false,
-                  "enablePartitionDiscovery": false
-                }
-              },
-              "policy": {
-                "timeout": "0.12:00:00",
-                "retry": 0,
-                "retryIntervalInSeconds": 30,
-                "secureInput": false,
-                "secureOutput": false
-              },
-              "name": "Delete unstructured old files",
               "dependsOn": []
             }
           ]
