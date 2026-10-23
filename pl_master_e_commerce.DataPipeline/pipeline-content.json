@@ -48,7 +48,8 @@
       {
         "type": "TridentNotebook",
         "typeProperties": {
-          "workspaceId": "58551800-4d5b-4de6-b81f-9e8e5ff7da65"
+          "notebookId": "7441bd3e-891e-995c-4da0-035485e3e0ed",
+          "workspaceId": "00000000-0000-0000-0000-000000000000"
         },
         "policy": {
           "timeout": "0.12:00:00",
@@ -58,8 +59,6 @@
           "secureOutput": false
         },
         "name": "call nb_tranform_bronze_to_silver",
-        "state": "Inactive",
-        "onInactiveMarkAs": "Succeeded",
         "dependsOn": [
           {
             "activity": "Invoke get structure data",
@@ -69,6 +68,29 @@
           },
           {
             "activity": "Invoke get un-structured data",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "TridentNotebook",
+        "typeProperties": {
+          "notebookId": "38d17762-8a3e-96d8-4ee7-71e43af7c832",
+          "workspaceId": "00000000-0000-0000-0000-000000000000"
+        },
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "silver_to_gold",
+        "dependsOn": [
+          {
+            "activity": "call nb_tranform_bronze_to_silver",
             "dependencyConditions": [
               "Succeeded"
             ]
